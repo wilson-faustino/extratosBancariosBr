@@ -1,0 +1,29 @@
+{
+  "name": "extratosbancariosbr",
+  "version": "0.1.0",
+  "description": "Converte o extrato bancário fornecido em .txt para .json",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wilson-faustino/extratosBancariosBr.git"
+  },
+  "keywords": [
+    "csv",
+    "json",
+    "extrato",
+    "bancario",
+    "txt"
+  ],
+  "author": "Wilson Faustino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wilson-faustino/extratosBancariosBr/issues"
+  },
+  "homepage": "https://github.com/wilson-faustino/extratosBancariosBr#readme",
+  "dependencies": {
+    "csvjson-csv2json": "^5.0.6"
+  }
+}
