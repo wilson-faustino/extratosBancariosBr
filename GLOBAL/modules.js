@@ -8,6 +8,12 @@ const log = (w) => console.log(w);
 const logD = console.dir.bind(console);
 const globalFunctions = require('./functions')
 //log(globalFunctions.listAllFilesInThisFolder())
+const bankAccounts = [
+   'CEF003',
+   'CEF043',
+   'ITAUPJ'
+];
+const callCef003 = require('../BANKACCOUNTS/BA_CEF003/BA_CEF003').callCef003;
 module.exports = {
    fs,
    path,
@@ -15,5 +21,7 @@ module.exports = {
    EventEmitter,
    //csv2json,
    log,
-   globalFunctions
+   globalFunctions,
+   bankAccounts,
+   callCef003
 };

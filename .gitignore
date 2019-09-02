@@ -61,3 +61,6 @@ typings/
 .next
 # estudos e testes
 estudos
+.DS_Store
+.csv
+.txt
