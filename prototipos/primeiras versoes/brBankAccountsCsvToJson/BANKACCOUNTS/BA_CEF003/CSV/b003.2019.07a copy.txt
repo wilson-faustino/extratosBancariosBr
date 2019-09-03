@@ -1,0 +1,2 @@
+"Conta";"Data_Mov";"Nr_Doc";"Historico";"Valor";"Deb_Cred"
+"0907003000008422";"20190701";"006700";"COV CR AUT";"392.77";"C"
