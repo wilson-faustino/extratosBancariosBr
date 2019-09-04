@@ -1,4 +1,4 @@
-const convertExtract = require('./index').convertExtract
+const convertExtract = require('./index').convert
 const jsonBankExtract = convertExtract(
    {
       csvDirPath: './CSV', // where the bank extracts are

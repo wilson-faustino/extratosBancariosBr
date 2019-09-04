@@ -8,11 +8,13 @@ A simple package that helps
 ##Installation
 
 ```
-$ npm install extratosBancariosBr # This will install
+$ npm i extratosBancariosBr
 ```
 
 ## How does it work?
 ```
+const extratosBancarios = require('extratosBancariosBr').convert;
+
 convertExtract(
    {
       csvDirPath: './CSV',

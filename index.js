@@ -3,13 +3,15 @@ function extratosBancariosParaJson(options) {
    // **********************************************
    // CALLING NEEDED MODULES
    // **********************************************
-   const csv2Json = require('./node_modules/csvjson-csv2json/csv2json');
+   const path = require('path');
+   const rootPath = __dirname;
+   const csv2Json = require('csvjson-csv2json');
    const log = x => console.log(x);
    // **********************************************
    // DEFINING THE DEFAULT ARGUMENTS
    // **********************************************
    const defaultOptions = {
-      csvDirPath: './CSV',
+      csvDirPath: './',
       jsonDirPath: './JSON',
       jsonFileName: 'extrato',
       bankAccount: '',
@@ -20,8 +22,16 @@ function extratosBancariosParaJson(options) {
    // **********************************************
    // GETTING ALL CSV FILES FULL PATH IN AN ARRAY
    // **********************************************
-   const allCsvFiles = options.fs.readdirSync(options.csvDirPath, 'utf8')
-      .map(csv => `${options.csvDirPath}/${csv}`);
+   const returnsAllCsvFiles = () => {
+      const filtered = options.fs.readdirSync(options.csvDirPath, 'utf8')
+         .filter(file => file.match(/csv$|txt$/))
+         .map(csv => `${options.csvDirPath}/${csv}`)
+
+      return filtered;
+   };
+
+   const allCsvFiles = returnsAllCsvFiles();
+
    // **********************************************
    // COMBINING ALL THE CSV DATA IN ONE SINGLE FILE
    // **********************************************
@@ -71,5 +81,5 @@ function extratosBancariosParaJson(options) {
 }
 
 module.exports = {
-   convertExtract: extratosBancariosParaJson
+   convert: extratosBancariosParaJson
 }

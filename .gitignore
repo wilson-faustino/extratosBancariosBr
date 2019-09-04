@@ -60,7 +60,9 @@ typings/
 # next.js build output
 .next
 # estudos e testes
+prototipos
 estudos
+teste.js
 .DS_Store
 .csv
 .txt
