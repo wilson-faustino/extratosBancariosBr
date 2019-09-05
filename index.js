@@ -5,6 +5,13 @@ function extratosBancariosParaJson(options) {
    // **********************************************
    const path = require('path');
    const rootPath = __dirname;
+   const bankAccountsDirAbsPath = path.join(rootPath, 'BANKACCOUNTS');
+   // ***** BANK ACCOUNTS
+   const bankAccounts = [];
+   bankAccounts.CEF003 = require(`${bankAccountsDirAbsPath}/CEF003.js`);
+
+   //console.log(CEF003())
+
    const csv2Json = require('csvjson-csv2json');
    const log = x => console.log(x);
    // **********************************************
@@ -13,9 +20,9 @@ function extratosBancariosParaJson(options) {
    const defaultOptions = {
       csvDirPath: './',
       jsonDirPath: './JSON',
-      jsonFileName: 'extrato',
-      bankAccount: '',
-      functionReturn: 'obj',
+      jsonFileName: 'extrato', // whatever name you want
+      bankAccount: '', // CEF003 | CEF043 | ITAUPJ
+      functionReturn: 'obj', // obj | str
       fs: require('fs')
    }
    options = Object.assign(defaultOptions, options)
@@ -44,15 +51,42 @@ function extratosBancariosParaJson(options) {
    // **********************************************
    // CONVERTING THE CSV FILE DATA INTO JSON DATA
    // **********************************************
-   const jsonFromCsv = csv2Json(allCsvData, { parseNumbers: true })
+   const jsonFromCsv = csv2Json(allCsvData, { parseNumbers: true });
    // **********************************************
    // MAKES A SET TO ELIMINATE DUPLICATES
    // **********************************************
-   const jsonSet = new Set(jsonFromCsv.map(item => JSON.stringify(item)))
+   const jsonSet = new Set(jsonFromCsv.map(item => JSON.stringify(item)));
    // **********************************************
    // CONVERTS THE SET BACK TO OBJECT DATA (NO DUPLICATES ANYMORE)
    // **********************************************
-   const jsonObj = [...jsonSet].map(item => JSON.parse(item))
+
+   function returnsJsonObj() {
+      const jsonObj = [...jsonSet].map(item => JSON.parse(item));
+
+      log('chegou aqui')
+      const cccccc = bankAccounts.CEF003(jsonObj);
+      return cccccc;
+
+      // switch (options.bankAccount) {
+      //    case 'CEF003':
+      //       log('chegou aqui')
+      //       CEF003(jsonObj);
+      //       break;
+      //    case 'CEF043':
+      //       log('ggggg');
+      //       break;
+      //    case 'ITAUPJ':
+      //       log('hhhh');
+      //       break;
+      //    default:
+      //       log('jjjjj');
+      //       break;
+      // };
+   }
+
+   const jsonObj = returnsJsonObj();
+   log(jsonObj)
+
    // **********************************************
    // MAKES A STRING VERSION TO MAKE IT POSSIBLE TO SAVE THIS DATA INTO A JSON LOCAL FILE
    // **********************************************

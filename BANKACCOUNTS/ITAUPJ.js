@@ -29,7 +29,7 @@ function sanitize_JSON_data_itau(JSON_data) {
       const valor = item.Valor.toLocaleString('pt-BR', { style: 'decimal' });
       item.Valor = valor;
       // 3 inserir coluna conta
-      item.Conta = 'contaItaú'
+      item.Conta = 'Itaú PJ'
       //console.log(JSON_data)
    });
    return JSON_data;

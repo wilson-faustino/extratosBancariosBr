@@ -1,8 +1,10 @@
 // IMPORTED MODULES
 const fs = require('fs');
 
-function sanitize_JSON_data_cef(JSON_data) {
-   JSON_data.forEach((item) => {
+function CEF003(json) {
+
+   json.forEach((item) => {
+
       //******* 1- CONVERTE NUMERO EM DATA
       const dataStr = item.Data_Mov.toString(10);
       const year = Number(dataStr.slice(0, 4));
@@ -15,18 +17,20 @@ function sanitize_JSON_data_cef(JSON_data) {
       const dataMov = new Date(year, month, day);
       //console.log(dataMov)
       item.Data_Mov = dataMov;
+
+
       //******* 2- AJUSTA VALOR
       item.Deb_Cred === 'D' ? item.Valor *= -1 : item.Valor;
       const valor = item.Valor.toLocaleString('pt-BR', { style: 'decimal' });
       item.Valor = valor;
+
+
       // 3- DELETA LINHA DEB CRED
       delete item.Deb_Cred;
    })
 
-   return JSON_data;
+   return json;
 }
 
 
-module.exports = {
-   sanitize_JSON_data_cef: sanitize_JSON_data_cef
-}
+module.exports = CEF003;
