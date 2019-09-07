@@ -13,16 +13,19 @@ $ npm i extratosBancariosBr
 
 ## How does it work?
 ```
-const extratosBancarios = require('extratosBancariosBr').convert;
-
-convertExtract(
+const convertExtract = require('extratosBancariosBr').convert;
+const jsonBankExtract = convertExtract(
    {
-      csvDirPath: './CSV',
-      jsonDirPath: './JSON',
-      jsonFileName: 'extrato',
-      bankAccount: '',
-      functionReturn: 'obj'
-   })
+      csvDirPath: './CSV', // where the bank extracts are
+      jsonDirPath: './JSON', // where the json file wil be placed
+      jsonFileName: 'extrato', // json file name
+      bankAccount: 'CEF043',
+      functionReturn: 'obj', //obj || str
+   }
+);
+
+console.log(jsonBankExtract)
+
 ```
 
 ## Options
