@@ -1,24 +1,27 @@
 
 function extratosBancariosParaJson(options) {
    // **********************************************
+   const log = x => console.log(x);
    // CALLING NEEDED MODULES
    // **********************************************
+   const csv2Json = require('csvjson-csv2json');
+   const fs = require('fs');
    const path = require('path');
    const rootPath = __dirname;
    const bankAccountsDirAbsPath = path.join(rootPath, 'BANKACCOUNTS');
+   // **********************************************
    // ***** BANK ACCOUNTS
-   const bankAccounts = [];
+   const bankAccounts = {};
    bankAccounts.CEF003 = require(`${bankAccountsDirAbsPath}/CEF003.js`);
-
-   //console.log(CEF003())
-
-   const csv2Json = require('csvjson-csv2json');
-   const log = x => console.log(x);
+   bankAccounts.CEF043 = bankAccounts.CEF003;
+   //bankAccounts.ITAUPJ = 'not implemented yet';
+   const bankAccountsKeys = Object.keys(bankAccounts);
    // **********************************************
    // DEFINING THE DEFAULT ARGUMENTS
    // **********************************************
+
    const defaultOptions = {
-      csvDirPath: './',
+      csvDirPath: './CSV',
       jsonDirPath: './JSON',
       jsonFileName: 'extrato', // whatever name you want
       bankAccount: '', // CEF003 | CEF043 | ITAUPJ
@@ -26,6 +29,21 @@ function extratosBancariosParaJson(options) {
       fs: require('fs')
    }
    options = Object.assign(defaultOptions, options)
+
+   const isDir = (path) => {
+      try {
+         var stat = fs.lstatSync(path);
+         return stat.isDirectory();
+      } catch (e) {
+         // lstatSync throws an error if path doesn't exist
+         return false;
+      }
+   }
+   createMissingFolder = (dir) => fs.mkdirSync(`./${dir}`);
+
+   if (isDir(options.csvDirPath) === false) { createMissingFolder(options.csvDirPath) };
+   if (isDir(options.jsonDirPath) === false) { createMissingFolder(options.jsonDirPath) };
+
    // **********************************************
    // GETTING ALL CSV FILES FULL PATH IN AN ARRAY
    // **********************************************
@@ -59,38 +77,26 @@ function extratosBancariosParaJson(options) {
    // **********************************************
    // CONVERTS THE SET BACK TO OBJECT DATA (NO DUPLICATES ANYMORE)
    // **********************************************
+   const jsonObj = [...jsonSet].map(item => JSON.parse(item));
+   // **********************************************
+   // eturns an extract obj  after being standardized
+   // **********************************************
+   function returnsStandardizedJsonObj(jsonObj) {
 
-   function returnsJsonObj() {
-      const jsonObj = [...jsonSet].map(item => JSON.parse(item));
+      const bankAccountExists = bankAccountsKeys.includes(options.bankAccount);
+      log(bankAccountExists)
 
-      log('chegou aqui')
-      const cccccc = bankAccounts.CEF003(jsonObj);
-      return cccccc;
-
-      // switch (options.bankAccount) {
-      //    case 'CEF003':
-      //       log('chegou aqui')
-      //       CEF003(jsonObj);
-      //       break;
-      //    case 'CEF043':
-      //       log('ggggg');
-      //       break;
-      //    case 'ITAUPJ':
-      //       log('hhhh');
-      //       break;
-      //    default:
-      //       log('jjjjj');
-      //       break;
-      // };
+      if (!bankAccountExists) {
+         return jsonObj
+      } else {
+         return bankAccounts[options.bankAccount](jsonObj)
+      }
    }
-
-   const jsonObj = returnsJsonObj();
-   log(jsonObj)
-
+   const stdJsonObj = returnsStandardizedJsonObj(jsonObj);
    // **********************************************
    // MAKES A STRING VERSION TO MAKE IT POSSIBLE TO SAVE THIS DATA INTO A JSON LOCAL FILE
    // **********************************************
-   const jsonStr = JSON.stringify(jsonObj);
+   const jsonStr = JSON.stringify(stdJsonObj);
    // **********************************************
    // SAVES THE DATA IN A LOCAL JSON FILE
    // **********************************************
