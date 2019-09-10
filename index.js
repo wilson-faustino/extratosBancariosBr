@@ -22,7 +22,7 @@ function extratosBancariosParaJson(options) {
    // **********************************************
 
    const defaultOptions = {
-      csvDirPath: './CSV',
+      csvDirPath: './',
       jsonDirPath: './JSON',
       jsonFileName: 'extrato', // whatever name you want
       bankAccount: '', // CEF003 | CEF043 | ITAUPJ
@@ -71,7 +71,19 @@ function extratosBancariosParaJson(options) {
       allCsvData += csvData;
       allCsvData += '\n';
    }
-   allCsvData = InsertHeaderIntoCsvData(allCsvData);
+
+   switch (options.bankAccount) {
+      case 'ITAUPJ':
+         allCsvData = InsertHeaderIntoCsvData(allCsvData);
+         break;
+      default:
+         allCsvData;
+         break;
+   }
+
+   //options.bankAccount = 'ITAUPJ' ? InsertHeaderIntoCsvData(allCsvData) : allCsvData
+
+   //allCsvData = InsertHeaderIntoCsvData(allCsvData);
 
    function InsertHeaderIntoCsvData(noHeaderCsvData) {
       const itaupjHeader = 'Data_Mov;Historico;Valor\n';
@@ -98,8 +110,8 @@ function extratosBancariosParaJson(options) {
    function returnsStandardizedJsonObj(jsonObj) {
 
       const bankAccountExists = bankAccountsKeys.includes(options.bankAccount);
-      log(bankAccountExists)
-      log(jsonObj)
+      // log(bankAccountExists)
+      // log(jsonObj)
       if (!bankAccountExists) {
          return jsonObj
       } else {

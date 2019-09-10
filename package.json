@@ -1,6 +1,6 @@
 {
   "name": "extratosbancariosbr",
-  "version": "2.2.0",
+  "version": "2.5.0",
   "description": "Converte o extrato bancário fornecido em .txt para .json",
   "main": "index.js",
   "scripts": {
