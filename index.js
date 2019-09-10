@@ -10,11 +10,12 @@ function extratosBancariosParaJson(options) {
    const rootPath = __dirname;
    const bankAccountsDirAbsPath = path.join(rootPath, 'BANKACCOUNTS');
    // **********************************************
-   // ***** BANK ACCOUNTS
+   // ********************** BANK ACCOUNTS
    const bankAccounts = {};
    bankAccounts.CEF003 = require(`${bankAccountsDirAbsPath}/CEF003.js`);
    bankAccounts.CEF043 = bankAccounts.CEF003;
-   //bankAccounts.ITAUPJ = 'not implemented yet';
+   bankAccounts.ITAUPJ = require(`${bankAccountsDirAbsPath}/ITAUPJ.js`);
+
    const bankAccountsKeys = Object.keys(bankAccounts);
    // **********************************************
    // DEFINING THE DEFAULT ARGUMENTS
@@ -56,7 +57,11 @@ function extratosBancariosParaJson(options) {
    };
 
    const allCsvFiles = returnsAllCsvFiles();
+   // **********************************************
+   // TREATING CSV DATA (insert header if needed)
+   // **********************************************
 
+   // log(allCsvFiles)
    // **********************************************
    // COMBINING ALL THE CSV DATA IN ONE SINGLE FILE
    // **********************************************
@@ -66,6 +71,15 @@ function extratosBancariosParaJson(options) {
       allCsvData += csvData;
       allCsvData += '\n';
    }
+   allCsvData = InsertHeaderIntoCsvData(allCsvData);
+
+   function InsertHeaderIntoCsvData(noHeaderCsvData) {
+      const itaupjHeader = 'Data_Mov;Historico;Valor\n';
+      const csvWithHeaders = itaupjHeader.concat(noHeaderCsvData);
+      return csvWithHeaders;
+   }
+
+   //log(allCsvData) // É AQUI!!!!!
    // **********************************************
    // CONVERTING THE CSV FILE DATA INTO JSON DATA
    // **********************************************
@@ -85,7 +99,7 @@ function extratosBancariosParaJson(options) {
 
       const bankAccountExists = bankAccountsKeys.includes(options.bankAccount);
       log(bankAccountExists)
-
+      log(jsonObj)
       if (!bankAccountExists) {
          return jsonObj
       } else {
