@@ -50,3 +50,8 @@ console.log(jsonBankExtract)
 |  jsonFileName: | nome do JSON                         |  extrato |                   |
 |   bankAccount: | contas bancárias compatíveis         |    ''    |'CEF003' | 'ITAUPJ'|
 | functionReturn:| returns either an object ou a string |   'obj'  |  'str'  | 'obj'   |
+
+## Exemplo
+### Cef003
+
+![gif exemplo](./markdown/exampleCef003.gif)
