@@ -18,7 +18,7 @@ Como trabalho com mais de um banco, senti a necessidade de padronizar os extrato
 ## Instalação
 
 ```javascript
-$ npm i extratosBancariosBr
+$ npm i extratosbancariosbr
 ```
 - - -
 ## Como funciona?
